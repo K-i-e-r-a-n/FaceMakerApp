@@ -42,19 +42,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initializeViews();
         setListeners();
+        initSpinners();
+        setSpinnerPositions(face.getStyles());
+
+    }
+
+    private void initSpinners(){
         /**
          External Reference
-           Date: 11 Feb 2015
-           Problem: I couldn't remember how to set spinner dropdown items with an adapter
-           Resource:
-               https://github.com/srvegdahl/srvegdahl-CS371GitLabStarter2Working/blob/master/app/src/main/java/edu/up/cs371/vegdahl/gitlab/GitLabActivity.java
-           Solution: I look at Professor Vegdahl's example from the github lab
+         Date: 11 Feb 2015
+         Problem: I couldn't remember how to set spinner dropdown items with an adapter
+         Resource:
+         https://github.com/srvegdahl/srvegdahl-CS371GitLabStarter2Working/blob/master/app/src/main/java/edu/up/cs371/vegdahl/gitlab/GitLabActivity.java
+         Solution: I look at Professor Vegdahl's example from the github lab
          */
         String[] hairStyleNames = getResources().getStringArray(R.array.HairStyles);
         ArrayAdapter<String> hairStyleAdapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_list_item_1, android.R.id.text1, hairStyleNames);
         hairStyleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hairSpinner.setAdapter(hairStyleAdapter);
+
+        String[] eyeStyleNames = getResources().getStringArray(R.array.EyeStyles);
+        ArrayAdapter<String> eyeStyleAdapter = new ArrayAdapter<>(this,
+                                                            android.R.layout.simple_list_item_1,
+                                                            android.R.id.text1,
+                                                            eyeStyleNames);
+        eyeStyleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        eyeSpinner.setAdapter(eyeStyleAdapter);
+
+        String[] noseStyleNames = getResources().getStringArray(R.array.NoseStyles);
+        ArrayAdapter<String> noseStyleAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1,
+                android.R.id.text1,
+                noseStyleNames);
+        noseStyleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        noseSpinner.setAdapter(noseStyleAdapter);
+
+
 
     }
 
@@ -98,6 +122,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(v.getId()){
             case R.id.randomButton:
                 face.randomize();
+                setColorSeekBars(getCurrentColor());
+                setSpinnerPositions(face.getStyles());
                 face.invalidate();
                 break;
             default:
@@ -108,15 +134,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (view.getId() == R.id.hairSpinner) {
-
+            face.setHairStyle(position);
         }
         if (view.getId() == R.id.eyeSpinner) {
-
+            face.setEyeStyle(position);
         }
         if (view.getId() == R.id.noseSpinner) {
-
+            face.setNoseStyle(position);
         }
-
     }
 
     @Override
@@ -141,6 +166,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
     private void setColorSeekBars(int color){
         int red = (color & RED_MASK) >> 4*4;
         redSeekBar.setProgress(red);
@@ -150,9 +176,61 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         blueSeekBar.setProgress(blue);
     }
 
+    private int getCurrentColor(){
+        int color = 0;
+        if (hairColorButton.isChecked()){
+            color = face.getHairColor();
+        }
+        else if (eyeColorButton.isChecked()){
+            color = face.getEyeColor();
+        }
+        else if (skinColorButton.isChecked()){
+            color = face.getSkinColor();
+        }
+        return color;
+    }
+
+
+    private void setCurrentColor(int color){
+        if (hairColorButton.isChecked()){
+            face.setHairColor(color);
+        }
+        else if (eyeColorButton.isChecked()){
+            face.setEyeColor(color);
+        }
+        else if (skinColorButton.isChecked()){
+           face.setSkinColor(color);
+        }
+    }
+
+    private void setSpinnerPositions(int[] styles){
+        hairSpinner.setSelection(styles[0], false);
+        eyeSpinner.setSelection(styles[1], false);
+        noseSpinner.setSelection(styles[1], false);
+    }
+
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+        int color = getCurrentColor();
+        switch (seekBar.getId()){
+            case R.id.redSeekBar:
+                color = (color & ~RED_MASK) + (progress << 4*4);
+                setCurrentColor(color);
+                redAmountText.setText("" + progress);
+                break;
+            case R.id.greenSeekBar:
+                color = (color & ~GREEN_MASK) + (progress << 2*4);
+                setCurrentColor(color);
+                greenAmountText.setText("" + progress);
+                break;
+            case R.id.blueSeekBar:
+                color = (color & ~BLUE_MASK) + progress;
+                setCurrentColor(color);
+                blueAmountText.setText("" + progress);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

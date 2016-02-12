@@ -2,6 +2,7 @@ package edu.up.cs371.facemaker;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.SurfaceView;
@@ -52,6 +53,7 @@ public class Face extends SurfaceView {
     }
 
     private void init(){
+        this.setWillNotDraw(false);
         hairStyles = new Path[3];
         rand = new Random();
         randomize();
@@ -67,9 +69,7 @@ public class Face extends SurfaceView {
 
     }
 
-    public int getSkinColor(){
-        return skinColor;
-    }
+    public int getSkinColor(){ return skinColor; }
 
     public int getEyeColor(){
         return eyeColor;
@@ -104,8 +104,27 @@ public class Face extends SurfaceView {
         this.invalidate();
     }
 
+    public void setNoseStyle(int s){
+        this.noseStyle = s;
+        this.invalidate();
+    }
+
+    public int[] getStyles(){
+        int returnVal[] = {hairStyleIndex, eyeStyle, noseStyle};
+        return returnVal;
+    }
+
     public void onDraw(Canvas c){
         //draw face
+        drawHead(c);
+        this.invalidate();
+    }
+
+    private void drawHead(Canvas canvas){
+        Paint skinPaint = new Paint();
+        skinPaint.setColor(skinColor);
+        skinPaint.setStyle(Paint.Style.FILL);
+        canvas.drawOval(300.0f, 50.0f, canvas.getWidth()-300.0f, canvas.getHeight()-50.0f, skinPaint);
     }
 
 }

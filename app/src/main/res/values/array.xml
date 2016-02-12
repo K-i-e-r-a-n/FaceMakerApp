@@ -6,4 +6,15 @@
         <item>"Spiky"</item>
     </array>
 
+    <array name="EyeStyles">
+        <item>"Normal"</item>
+        <item>"Excited"</item>
+        <item>"Tired"</item>
+    </array>
+
+    <array name="NoseStyles">
+        <item>"Medium"</item>
+        <item>"Crooked"</item>
+        <item>"Large"</item>
+    </array>
 </resources>
