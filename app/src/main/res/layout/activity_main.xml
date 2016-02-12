@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="edu.up.cs371.facemaker.MainActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <edu.up.cs371.facemaker.Face
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/face"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Random Face"
+                    android:id="@+id/randomButton"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hair Style"
+                    android:id="@+id/hairLabel"
+                    android:layout_weight="1"
+                    android:textSize="28sp"
+                    android:layout_gravity="center"
+                    android:gravity="center" />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/hairSpinner"
+                    android:layout_weight="1"
+                    android:layout_gravity="right" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Eye Style"
+                    android:id="@+id/eyeLabel"
+                    android:layout_weight="1"
+                    android:textSize="28sp"
+                    android:layout_gravity="center"
+                    android:gravity="center|center_horizontal" />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/eyeSpinner"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:layout_gravity="right" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nose Style"
+                    android:id="@+id/noseLabel"
+                    android:layout_weight="1"
+                    android:textSize="28sp"
+                    android:layout_gravity="center"
+                    android:gravity="center|center_horizontal" />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/noseSpinner"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:layout_gravity="right" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Set Color Of:"
+                    android:id="@+id/colorSelectorText"
+                    android:textSize="28sp"
+                    android:layout_weight="1"
+                    android:textColor="#000000" />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_weight="5"
+                    android:id="@+id/colorSetSelector">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hair"
+                        android:id="@+id/hairColorButton"
+                        android:layout_weight="1"
+                        android:textSize="28sp" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Eyes"
+                        android:id="@+id/eyeColorButton"
+                        android:layout_weight="1"
+                        android:textSize="28sp" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Skin"
+                        android:id="@+id/skinColorButton"
+                        android:layout_weight="1"
+                        android:textSize="28sp" />
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="R:"
+                    android:id="@+id/redColorLabel"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="28sp"
+                    android:layout_weight="1"
+                    android:textColor="#d30000"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="255"
+                    android:id="@+id/redAmountText"
+                    android:textSize="20sp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center" />
+
+                <SeekBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/redSeekBar"
+                    android:layout_weight="100"
+                    android:max="255" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2" >
+
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="G:"
+                    android:id="@+id/greenColorLabel"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="28sp"
+                    android:layout_weight="1"
+                    android:textColor="#009f15" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="255"
+                    android:id="@+id/greenAmountText"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="20sp"
+                    android:layout_weight="1"
+                    android:gravity="center" />
+
+                <SeekBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/greenSeekBar"
+                    android:layout_weight="100"
+                    android:max="255" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2" >
+
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:text="B:"
+                    android:id="@+id/blueColorLabel"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="28sp"
+                    android:layout_weight="1"
+                    android:textColor="#0870ef" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="255"
+                    android:id="@+id/blueAmountText"
+                    android:textSize="20sp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|center|center_horizontal"
+                    android:layout_gravity="center" />
+
+                <SeekBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/blueSeekBar"
+                    android:layout_weight="100"
+                    android:max="255" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
