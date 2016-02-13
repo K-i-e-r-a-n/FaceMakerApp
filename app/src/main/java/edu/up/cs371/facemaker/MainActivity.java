@@ -2,6 +2,7 @@ package edu.up.cs371.facemaker;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -43,10 +44,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initializeViews();
         setListeners();
         initSpinners();
-        setSpinnerPositions(face.getStyles());
+        setSpinnerPositions(face.getStyles()); //get starting random values and set the spinners to match
 
     }
 
+    /**
+     * Initializes the spinners with values to select from. This code block was too
+     * messy to put directly in onCreate (it hurt readability)
+     */
     private void initSpinners(){
         /**
          External Reference
@@ -82,6 +87,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /**
+     * Initializes all views using findViewById
+     */
     private void initializeViews() {
         face = (Face)findViewById(R.id.face);
         randomButton = (Button)findViewById(R.id.randomButton);
@@ -108,12 +116,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         colorSetSelector = (RadioGroup)findViewById(R.id.colorSetSelector);
     }
 
+    /**
+     * Sets the listeners on views that require one
+     */
     private void setListeners(){
         randomButton.setOnClickListener(this);
         redSeekBar.setOnSeekBarChangeListener(this);
         greenSeekBar.setOnSeekBarChangeListener(this);
         blueSeekBar.setOnSeekBarChangeListener(this);
         colorSetSelector.setOnCheckedChangeListener(this);
+        hairSpinner.setOnItemSelectedListener(this);
+        eyeSpinner.setOnItemSelectedListener(this);
+        noseSpinner.setOnItemSelectedListener(this);
     }
 
 
@@ -133,24 +147,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (view.getId() == R.id.hairSpinner) {
+        //change style based on spinner
+       // Log.i("Spinner value", " "+ position);
+        if (parent.getId() == R.id.hairSpinner) {
             face.setHairStyle(position);
+           // Log.i("hairstyle", "" + position);
         }
-        if (view.getId() == R.id.eyeSpinner) {
+        if (parent.getId() == R.id.eyeSpinner) {
             face.setEyeStyle(position);
         }
-        if (view.getId() == R.id.noseSpinner) {
+        if (parent.getId() == R.id.noseSpinner) {
             face.setNoseStyle(position);
         }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        //do something
+        //not used
     }
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
+        //changes the bar values depending on which radiobutton is checked
         switch(checkedId){
             case R.id.hairColorButton:
                 int color = face.getHairColor();
@@ -167,7 +185,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Sets the seekbars to the rgb values of the color
+     * @param color - color to set the bars to
+     */
     private void setColorSeekBars(int color){
+        //uses masks to get each byte of color info
         int red = (color & RED_MASK) >> 4*4;
         redSeekBar.setProgress(red);
         int green = (color & GREEN_MASK) >> 2*4;
@@ -175,7 +198,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int blue = (color & BLUE_MASK);
         blueSeekBar.setProgress(blue);
     }
-
+    /**
+     * get current color from face, depending on which radiobutton is checked
+     * @returns color int
+    */
     private int getCurrentColor(){
         int color = 0;
         if (hairColorButton.isChecked()){
@@ -190,7 +216,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return color;
     }
 
-
+    /**
+     *  sets color of face element that is currently checked
+     */
     private void setCurrentColor(int color){
         if (hairColorButton.isChecked()){
             face.setHairColor(color);
@@ -203,6 +231,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     *  Sets spinner choice to match the style array passed
+     * @param styles - int array of style values of hair, eye, and nose styles respectively
+     */
     private void setSpinnerPositions(int[] styles){
         hairSpinner.setSelection(styles[0], false);
         eyeSpinner.setSelection(styles[1], false);
@@ -211,6 +243,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        //change the value of the current color based on the positions of the red, green, and
+        //blue seek bars. Uses bit masking and shifting to change the appropriate byte for each
+        //color.
         int color = getCurrentColor();
         switch (seekBar.getId()){
             case R.id.redSeekBar:
@@ -235,11 +270,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-
+        //unused
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-
+        //unused
     }
 }
